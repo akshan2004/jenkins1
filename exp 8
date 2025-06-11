@@ -1,0 +1,128 @@
+sudo apt update
+
+
+sudo apt install ansible -y
+
+mkdir ansible-deploy
+
+cd ansible-deploy
+
+sudo apt install default-jdk -y
+
+nano inventory.ini:
+[local]
+localhost ansible_connection=local
+
+
+nano deploy.yml
+
+
+- name: Deploy JAR from Ansible Jenkins
+  hosts: local
+  become: true
+  tasks:
+    - name: Copy JAR from Jenkins workspace
+      copy:
+        src: /mnt/c/ProgramData/Jenkins/.jenkins/workspace/JENKINSPROJECT/target/myapp-1.0-SNAPSHOT.jar
+        dest: /home/itishree/ansible-deploy/myapp-1.0-SNAPSHOT.jar
+        mode: '0755'
+
+    - name: Run JAR in Background
+      shell: nohup java -jar /home/itishree/ansible-deploy/myapp-1.0-SNAPSHOT.jar > app.log 2>&1 &
+
+
+ansible-playbook -i inventory.ini deploy.yml --ask-become-pass
+
+ansible-playbook -i inventory.ini deploy.yml
+
+
+<dependencies>
+<dependency>
+<groupId>junit</groupId>
+<artifactId>junit</artifactId>
+<version>4.12</version>
+<scope>test</scope>
+</dependency>
+</dependencies>
+<build>
+<pluginManagement>
+<plugins>
+<plugin>
+<groupId>org.apache.maven.plugins</groupId>
+<artifactId>maven-compiler-plugin</artifactId>
+<version>3.0.2</version>
+<configuration>
+<source>1.8</source>
+<target>1.8</target>
+</configuration>
+</plugin>
+<plugin>
+<groupId>org.apache.maven.plugins</groupId>
+<artifactId>maven-jar-plugin</artifactId>
+<version>3.2.2</version>
+<configuration>
+<archive>
+<manifest>
+<addClasspath>true</addClasspath>
+<mainClass>com.example.App</mainClass>
+</manifest>
+</archive>
+</configuration>
+</plugin>
+</plugins>
+</pluginManagement>
+</build>
+</project>
+
+
+
+
+
+cd foldername
+git add pom.xl
+
+---
+- name: Deploy JAR
+  hosts: local
+  become: true
+
+  tasks:
+    - name: Copy JAR file
+      copy:
+        src: /mnt/c/ProgramData/Jenkins/.jenkins/workspace/your-job/target/your-app.jar
+        dest: /home/your-username/ansible-lab/app.jar
+        mode: '0755'
+
+    - name: Run JAR file
+      shell: nohup java -jar /home/your-username/ansible-lab/app.jar > app.log 2>&1 &
+
+
+
+
+
+Add a Windows Batch Command to run the Ansible playbook automatically: 
+wsl ansible-playbook -i /home/your-user/ansible-lab/inventory /home/youruser/ansible
+lab/deploy.yml 
+
+<build>
+  <plugins>
+    <plugin>
+      <artifactId>maven-jar-plugin</artifactId>
+      <version>3.1.0</version>
+      <configuration>
+        <archive>
+          <manifest>
+            <addClasspath>true</addClasspath>
+            <mainClass>com.multit.App</mainClass> <!-- Replace with your actual main class -->
+          </manifest>
+        </archive>
+      </configuration>
+    </plugin>
+  </plugins>
+</build>
+
+
+
+
+git c ommit
+git push
